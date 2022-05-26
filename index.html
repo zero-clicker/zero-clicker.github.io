@@ -107,11 +107,11 @@
       timer.on("start", () => console.log("start"));
       timer.on("timer", (remains) => {
         let duration = moment.duration(Math.abs(remains), "milliseconds");
-        countdown.textContent = moment.utc(duration.as("milliseconds")).format(`${remains < 0 ? '-' : ''}ss.SSS`);
+        countdown.textContent = moment.utc(duration.as("milliseconds")).format(`${remains < 0 ? '-' : ''}s.SSS`);
       });
       timer.on("stop", (remains) => {
         let duration = moment.duration(Math.abs(remains), "milliseconds");
-        let score = moment.utc(duration.as("milliseconds")).format(`${remains < 0 ? '-' : ''}ss.SSS`);
+        let score = moment.utc(duration.as("milliseconds")).format(`${remains < 0 ? '-' : ''}s.SSS`);
         let scoreNames = ['하수', '평민', '시민', '초수', '중수', '고수', '영웅', '지존', '초인', '식물신', '바람신', '물신', '달신', '별신', '태양신', '은하신', '우수신', '수호신', '절대신'];
         let scoreValue = Math.min(500, Math.abs(remains)), scoreCount = scoreNames.length - 1, scoreIndex = Math.floor(scoreCount * (scoreValue / 500));
         let scoreLevel = scoreCount - scoreIndex, scoreName = scoreNames[scoreLevel];

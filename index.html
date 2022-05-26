@@ -114,14 +114,15 @@
       timer.on("stop", (remains) => {
         let duration = Math.abs(remains);
         let score = moment.utc(duration).format(`${remains < 0 ? '-' : ''}s.SSS`);
+        let jackpot = [111,222,333,444,555,666,777,888,999,1111,2222,3333,4444].includes(duration);
         countdown.textContent = score;
         
         let scoreNames = ['하수', '평민', '시민', '초수', '중수', '고수', '영웅', '지존', '초인', '식물신', '바람신', '물신', '달신', '별신', '태양신', '은하신', '우수신', '수호신', '절대신'];
         let scoreValue = Math.min(500, Math.abs(remains)), scoreCount = scoreNames.length - 1, scoreIndex = Math.floor(scoreCount * (scoreValue / 500));
         let scoreLevel = scoreCount - scoreIndex;
-        let scoreName = duration ? scoreNames[scoreLevel] : 'AI봇';
-        let jackpot = [111,222,333,444,555,666,777,888,999,1111,2222,3333,4444].includes(duration);
-        if(jackpot) scoreName = '갬블러';
+        let scoreName =  scoreNames[scoreLevel];
+        if(  jackpot) scoreName = '갬블러';
+        if(!duration) scoreName = 'AI봇';
         Kakao.Link.sendDefault({
           objectType: 'feed',
           content: {

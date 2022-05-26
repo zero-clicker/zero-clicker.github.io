@@ -77,7 +77,7 @@
             this.timer = setTimeout(() => this.handleTimer());
           } else {
             clearTimeout(this.timer);
-            this.emit("timer", -this.timeout);
+            this.emit("timer", remains);
             this.emit("stop", remains);
           }
         }
@@ -90,6 +90,7 @@
         stop() {
           clearTimeout(this.timer);
           const remains = this.timeout - (Date.now() - this.startedAt);
+          this.emit("timer", remains);
           this.emit("stop", remains);
           return this;
         }

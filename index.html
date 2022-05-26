@@ -123,6 +123,7 @@
         let jackpot = [111,222,333,444,555,777,888,999,1111,2222,3333,4444].includes(duration);
         let devil = [666].includes(duration);
         let santa = [1225].includes(duration);
+        let pie = [314,3141].includes(duration);
         
         
         let scoreNames = ['하수', '평민', '시민', '초수', '중수', '고수', '영웅', '지존', '초인', '식물신', '바람신', '물신', '달신', '별신', '태양신', '은하신', '우수신', '수호신', '절대신'];
@@ -131,7 +132,7 @@
         let scoreName  = scoreNames[scoreLevel];
         let imageUrl = 'https://avatars.githubusercontent.com/u/106331846';
         
-        if(  jackpot) {
+        if(jackpot) {
           imageUrl = 'https://zero-clicker.github.io/777.png';
           scoreName = '갬블러';
         }
@@ -142,6 +143,10 @@
         if(santa) {
           imageUrl = 'https://zero-clicker.github.io/santa.png';
           scoreName = '산타클로스';
+        }
+        if(pie) {
+          imageUrl = 'https://zero-clicker.github.io/pie.png';
+          scoreName = '공학자';
         }
         if(!duration) {
           imageUrl = 'https://zero-clicker.github.io/robot.png';

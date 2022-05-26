@@ -124,6 +124,10 @@
         let devil = [666].includes(duration);
         let santa = [1225].includes(duration);
         let pie = [314,3141].includes(duration);
+        let i42 = [42,4242].includes(duration);
+        let i386 = [386,1386,2386,3386,4386].includes(duration);
+        let i486 = [486,1486,2486,3486,4486].includes(duration);
+        let i3000 = [3000].includes(duration);
         
         
         let scoreNames = ['하수', '평민', '시민', '초수', '중수', '고수', '영웅', '지존', '초인', '식물신', '바람신', '물신', '달신', '별신', '태양신', '은하신', '우수신', '수호신', '절대신'];
@@ -132,26 +136,15 @@
         let scoreName  = scoreNames[scoreLevel];
         let imageUrl = 'https://avatars.githubusercontent.com/u/106331846';
         
-        if(jackpot) {
-          imageUrl = 'https://zero-clicker.github.io/777.png';
-          scoreName = '갬블러';
-        }
-        if(devil) {
-          imageUrl = 'https://zero-clicker.github.io/devil.png';
-          scoreName = '악마소환사';
-        }
-        if(santa) {
-          imageUrl = 'https://zero-clicker.github.io/santa.png';
-          scoreName = '산타클로스';
-        }
-        if(pie) {
-          imageUrl = 'https://zero-clicker.github.io/pie.png';
-          scoreName = '공학자';
-        }
-        if(!duration) {
-          imageUrl = 'https://zero-clicker.github.io/robot.png';
-          scoreName = 'AI봇';
-        }
+        if(jackpot) { scoreName = '갬블러'; imageUrl = 'https://zero-clicker.github.io/777.png'; }
+        if(devil) { scoreName = '악마소환사'; imageUrl = 'https://zero-clicker.github.io/devil.png'; }
+        if(santa) { scoreName = '산타클로스'; imageUrl = 'https://zero-clicker.github.io/santa.png'; }
+        if(pie) { scoreName = '공학자'; imageUrl = 'https://zero-clicker.github.io/pie.png'; }
+        if(i42) { scoreName = '히치하이커'; imageUrl = 'https://zero-clicker.github.io/42.png'; }
+        if(i386) { scoreName = '골동품'; imageUrl = 'https://zero-clicker.github.io/386.png'; }
+        if(i486) { scoreName = '사랑꾼'; imageUrl = 'https://zero-clicker.github.io/486.png'; }
+        if(i3000) { scoreName = '사랑꾼'; imageUrl = 'https://zero-clicker.github.io/3000.png'; }
+        if(!duration) { scoreName = 'AI봇'; imageUrl = 'https://zero-clicker.github.io/robot.png'; }
         Kakao.Link.sendDefault({
           objectType: 'feed',
           content: {

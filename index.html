@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="always">
+    <meta name="robots" content="noindex,nofollow">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta property="og:title" content="나의 타이밍 감각 점수는? - 타이밍 감각 테스트">
+    <meta property="og:image" content="https://avatars.githubusercontent.com/u/106331846">
+    <meta property="og:description" content="당신의 타이밍 감각은 과연 몇점일까요? 지금 바로 테스트하세요.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="나의 타이밍 감각 점수는? - 타이밍 감각 테스트">
+    <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/106331846">
+    <meta name="twitter:description" content="당신의 타이밍 감각은 과연 몇점일까요? 지금 바로 테스트하세요.">
+    
+    <title>나의 타이밍 감각 점수는? - 타이밍 감각 테스트</title>
+    <meta name="description" content="당신의 타이밍 감각은 과연 몇점일까요? 지금 바로 테스트하세요.">
+    <style>
+      * { margin: 0; padding: 0; }
+      html, body { height: 100%; }
+      #container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%; height: 100%;
+        background: #000;
+        color: #fff;
+      }
+      #countdown {
+        margin-top: 3rem;
+        font-size: 5rem;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>타이밍 감각 테스트</h1>
+      <p>최대한 0에 가까울때 화면을 터치하세요.</p>
+      <p id="countdown"></p>
+    </div>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+    <script>
+      class EventEmitter {
+        constructor() {
+          this.callbacks = {};
+        }
+        on(event, cb) {
+          if (!this.callbacks[event]) this.callbacks[event] = [];
+          this.callbacks[event].push(cb);
+          return this;
+        }
+        emit(event, ...args) {
+          let cbs = this.callbacks[event];
+          if (cbs) {
+            cbs.forEach((cb) => cb(...args));
+          }
+          return this;
+        }
+      }
+
+      class CountTimer extends EventEmitter {
+        constructor(timeout = 0) {
+          super();
+          this.startedAt = 0;
+          this.timeout = timeout;
+        }
+        handleTimer() {
+          const remains = this.timeout - (Date.now() - this.startedAt);
+          if (remains > -this.timeout) {
+            this.emit("timer", remains);
+            clearTimeout(this.timer);
+            this.timer = setTimeout(() => this.handleTimer());
+          } else {
+            clearTimeout(this.timer);
+            this.emit("timer", -this.timeout);
+            this.emit("stop");
+          }
+        }
+        start() {
+          this.startedAt = Date.now();
+          this.emit("start");
+          this.handleTimer();
+          return this;
+        }
+        stop() {
+          clearTimeout(this.timer);
+          const remains = this.timeout - (Date.now() - this.startedAt);
+          this.emit("stop", remains);
+          return this;
+        }
+      }
+    </script>
+    <script>
+      Kakao.init('5e6c7d130890462fec100b45e4bb4f9b');
+      Kakao.isInitialized();
+    </script>
+    <script>
+      const timer = new CountTimer(5000);
+      const container = document.querySelector("#container");
+      const countdown = document.querySelector("#countdown");
+      container.onclick = () => timer.stop();
+      timer.on("start", () => console.log("start"));
+      timer.on("timer", (remains) => {
+        let duration = moment.duration(Math.abs(remains), "milliseconds");
+        countdown.textContent = moment.utc(duration.as("milliseconds")).format(`${remains < 0 ? '-' : ''}ss.SSS`);
+      });
+      timer.on("stop", (remains) => {
+        let duration = moment.duration(Math.abs(remains), "milliseconds");
+        let score = moment.utc(duration.as("milliseconds")).format(`${remains < 0 ? '-' : ''}ss.SSS`);
+        let scoreNames = ['하수', '평민', '시민', '초수', '중수', '고수', '영웅', '지존', '초인', '식물신', '바람신', '물신', '달신', '별신', '태양신', '은하신', '우수신', '수호신', '절대신'];
+        let scoreValue = Math.min(500, Math.abs(remains)), scoreCount = scoreNames.length - 1, scoreIndex = Math.floor(scoreCount * (scoreValue / 500));
+        let scoreLevel = scoreCount - scoreIndex, scoreName = scoreNames[scoreLevel];
+        Kakao.Link.sendDefault({
+          objectType: 'feed',
+          content: {
+            title: '당신의 타이밍 감각은 과연 몇점일까요? 지금 바로 테스트하세요.',
+            imageUrl: 'https://avatars.githubusercontent.com/u/106331846',
+            link: {
+              mobileWebUrl: 'https://zero-clicker.github.io',
+              webUrl: 'https://zero-clicker.github.io',
+            },
+          },
+          itemContent: {
+            profileText: '나의 타이밍 감각 점수는?',
+            titleImageText: `${scoreLevel}등급! 타이밍의 ${scoreName}`,
+            titleImageCategory: `내 기록 : ${score}`
+          },
+          buttons: [
+            {
+              title: '도전하기',
+              link: {
+                mobileWebUrl: 'https://zero-clicker.github.io',
+                webUrl: 'https://zero-clicker.github.io',
+              },
+            }
+          ],
+        });
+        setTimeout(() => location.href='https://datalab.tools', 300);
+      });
+      timer.start();
+    </script>
+  </body>
+</html>

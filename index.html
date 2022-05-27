@@ -127,6 +127,7 @@
         let i42 = [42,4242].includes(duration);
         let i386 = [386,1386,2386,3386,4386].includes(duration);
         let i486 = [486,1486,2486,3486,4486].includes(duration);
+        let i688 = [688].includes(duration);
         let i3000 = [3000].includes(duration);
         
         
@@ -143,6 +144,7 @@
         if(i42) { scoreName = '히치하이커'; imageUrl = 'https://zero-clicker.github.io/42.png'; }
         if(i386) { scoreName = '골동품'; imageUrl = 'https://zero-clicker.github.io/386.png'; }
         if(i486) { scoreName = '사랑꾼'; imageUrl = 'https://zero-clicker.github.io/486.png'; }
+        if(i688) { scoreName = '만렙블로거'; imageUrl = 'https://zero-clicker.github.io/688.png'; }
         if(i3000) { scoreName = '사랑꾼'; imageUrl = 'https://zero-clicker.github.io/3000.png'; }
         if(!duration) { scoreName = 'AI봇'; imageUrl = 'https://zero-clicker.github.io/robot.png'; }
         Kakao.Link.sendDefault({
